@@ -1,7 +1,12 @@
 package com.tracker.Model;
 
-import lombok.Getter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class Order {
     @Getter
     private int id, amount, customer_id;
