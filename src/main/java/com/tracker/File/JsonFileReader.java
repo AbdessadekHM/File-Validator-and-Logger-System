@@ -11,24 +11,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracker.Model.Order;
 
 public class JsonFileReader {
-    private String jsonFile;
 
-    public JsonFileReader(String jsonFString){
-        this.jsonFile = jsonFString;
+    private static JsonFileReader instance = new JsonFileReader();
 
+    private JsonFileReader(){}
+
+
+    public static JsonFileReader getInstance(){
+        return instance;
     }
 
-    public List<Order> read(){
-        URL url = JsonFileReader.class.getResource("/json/"+jsonFile);
-        if(url == null){
-            System.out.println("bad arg");
-            return null;
-        }
+    public List<Order> read(String jsonFile){
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Order[] tmp_orders = objectMapper.readValue(new File(url.getPath()), Order[].class);
+            Order[] tmp_objects = objectMapper.readValue(new File("src/main/resources/json/" + jsonFile), Order[].class);
 
-            List<Order> orders = new ArrayList<>(Arrays.asList(tmp_orders));
+            List<Order> orders = new ArrayList<>(Arrays.asList(tmp_objects));
             
     
             return orders;

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,6 +12,14 @@ import com.tracker.DAO.IStore;
 import com.tracker.Model.Customer;
 
 public class Customers extends ConnectionToDB implements IStore<Customer>{
+
+    private static Customers instance = new Customers();
+
+    private Customers(){}
+
+    public static Customers getInstance(){
+        return instance;
+    }
 
     @Override
     public void add(List<Customer> list) {
@@ -35,7 +44,7 @@ public class Customers extends ConnectionToDB implements IStore<Customer>{
     }
 
     @Override
-    public Customer get() {
+    public List<Customer> get() {
         String statement = "SELECT * FROM Customers";
         Statement stmt;
         try {
@@ -43,16 +52,23 @@ public class Customers extends ConnectionToDB implements IStore<Customer>{
 
             ResultSet rs = stmt.executeQuery(statement);
             
+
+            List<Customer> customers = new ArrayList<>();
+            while(rs.next()){
+                customers.add(new Customer(rs.getInt("id"),rs.getString("nom"),rs.getString("email"), rs.getString("phone")));
+            }
+            return customers;
+
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return null;
         }
         /*
          * a mocked return 
          * TODO: 
          * implement this method and the rest of methods after finishing schedular task
          */
-        return new Customer(121,"daf","dafda","212");
     }
 
     @Override

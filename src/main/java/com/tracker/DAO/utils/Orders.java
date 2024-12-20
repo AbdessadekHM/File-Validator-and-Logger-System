@@ -7,6 +7,13 @@ import com.tracker.DAO.IStore;
 import com.tracker.Model.Order;
 
 public class Orders extends ConnectionToDB implements IStore<Order>{
+    
+    private static Orders instance = new Orders();
+
+    
+    public static Orders getInstance(){
+        return instance;
+    }
 
     @Override
     public void add(List<Order> list) {
@@ -33,7 +40,7 @@ public class Orders extends ConnectionToDB implements IStore<Order>{
 
 
     @Override
-    public Order get() {
+    public List<Order> get() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'get'");
     }
