@@ -37,7 +37,7 @@ public class TrackingThread extends Thread{
         
         if(correctOrders.stream().count() > 0){
 
-            //Orders.getInstance().add(correctOrders);
+            Orders.getInstance().add(correctOrders);
             JsonFileWriter.getInstnace().write(correctOrders, "output.json");
         }else{
             JsonFileWriter.getInstnace().write(inCorrectOrders, "error.json");
